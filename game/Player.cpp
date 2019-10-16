@@ -5087,7 +5087,7 @@ bool idPlayer::GiveWeaponMods( int weapon, int mods ) {
 idPlayer::GiveWeaponMod
 ==============
 */
-void idPlayer::GiveWeaponMod ( const char* weaponmod ) {
+void idPlayer::GiveWeaponMod ( const char* weaponmod ) { // MOD this is what to use to give a player a mod
 	const idDict* modDict;
 	const idDict* weaponDict;
 	const char*	  weaponClass;
@@ -9745,7 +9745,7 @@ void idPlayer::Killed( idEntity *inflictor, idEntity *attacker, int damage, cons
 	}
 
 // squirrel: Mode-agnostic buymenus
-	if ( gameLocal.isMultiplayer ) {
+	if (gameLocal.isMultiplayer ) {
 		if( gameLocal.mpGame.IsBuyingAllowedInTheCurrentGameMode() )
 		{
 			if( gameLocal.mpGame.GetGameState()->GetMPGameState() != WARMUP )
@@ -14002,6 +14002,7 @@ void idPlayer::ClampCash( float minCash, float maxCash )
 		buyMenuCash = maxCash;
 }
 
+// MOD keep an eye here
 void idPlayer::GiveCash( float cashDeltaAmount )
 {
 	//int minCash = gameLocal.mpGame.mpBuyingManager.GetIntValueForKey( "playerMinCash", 0 );

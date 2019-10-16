@@ -3684,7 +3684,8 @@ void idAI::OnDeath( void ){
 
 	ExecScriptFunction( funcs.death );
 
-/* DONT DROP ANYTHING FOR NOW
+// ARMOD drops items
+
 	float rVal = gameLocal.random.RandomInt( 100 );
 
 	if( spawnArgs.GetFloat( "no_drops" ) >= 1.0 ){
@@ -3692,12 +3693,12 @@ void idAI::OnDeath( void ){
 	}else{
 		// Fixme!  Better guys should drop better stuffs!  Make drops related to guy type?  Do something cooler here?
 		if( rVal < 25 ){	// Half of guys drop nothing?
-			spawnArgs.Set( "def_dropsItem1", "" );
+			spawnArgs.Set( "def_dropsItem1", "item_health_large" );
 		}else if( rVal < 50 ){
 			spawnArgs.Set( "def_dropsItem1", "item_health_small" );
 		}
 	}
-*/
+
 }
 
 /*
