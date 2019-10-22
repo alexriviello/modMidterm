@@ -686,6 +686,8 @@ struct gameImport_t {
 	idAASFileManager *			AASFileManager;			// AAS file manager
 	idCollisionModelManager *	collisionModelManager;	// collision model manager
 
+//	idUserInterface *buyMenu; // ARMOD trying some shit
+
 // RAVEN BEGIN
 // jscott:
 	rvBSEManager *				bse;					// Raven effects system

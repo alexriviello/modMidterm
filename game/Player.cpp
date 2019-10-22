@@ -4260,6 +4260,7 @@ bool idPlayer::GiveItem( idItem *item ) {
 	
 	// Show the item pickup on the hud
 	if ( hud ) {
+		// ARMOD modify for cash amount
 		idStr langToken = item->spawnArgs.GetString( "inv_name" );
 		hud->SetStateString ( "itemtext", common->GetLocalizedString( langToken ) );
 		hud->SetStateString ( "itemicon", item->spawnArgs.GetString( "inv_icon" ) );
@@ -14002,7 +14003,7 @@ void idPlayer::ClampCash( float minCash, float maxCash )
 		buyMenuCash = maxCash;
 }
 
-// MOD keep an eye here
+// ARMOD keep an eye here
 void idPlayer::GiveCash( float cashDeltaAmount )
 {
 	//int minCash = gameLocal.mpGame.mpBuyingManager.GetIntValueForKey( "playerMinCash", 0 );
