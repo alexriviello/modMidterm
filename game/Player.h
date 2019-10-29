@@ -459,6 +459,9 @@ public:
 
  	bool					UserInfoChanged( void );
 	idDict *				GetUserInfo( void );
+
+	// ARMOD adding class method
+	void					ChooseClass(void);
 // RAVEN BEGIN
 // shouchard:  BalanceTDM->BalanceTeam (now used for CTF as well as TDM)
 	bool					BalanceTeam( void );

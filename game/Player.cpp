@@ -1342,6 +1342,30 @@ idPlayer::idPlayer() {
 	teamAmmoRegenPending	= false;
 	teamDoubler			= NULL;		
 	teamDoublerPending		= false;
+	// ARMOD implementing ChooseClass Method that chooses your player's class
+	ChooseClass();
+}
+
+// ARMOD choosing class
+void idPlayer::ChooseClass(void){
+	gameLocal.Printf("CLASS LEVEL %i", g_skill.GetInteger());
+	if (g_skill.GetInteger() == 0){
+		// Slayer class
+		inventory.maxHealth = 300;
+		health = 300;
+		inventory.maxarmor = 500;
+		Event.SetHealth(400);
+		Event.SetArmor(200);
+	}
+	if (g_skill.GetInteger() == 1){
+		// Tank class
+	}
+	if (g_skill.GetInteger() == 2){
+		// Gunslinger class
+
+
+	}
+
 }
 
 /*
@@ -3382,7 +3406,7 @@ void idPlayer::UpdateHudAmmo( idUserInterface *_hud ) {
 	_hud->SetStateBool( "player_ammo_empty", ( ammoamount == 0 ) );
 }
 
-/*
+/* 
 ===============
 idPlayer::UpdateHudStats
 ===============
@@ -5196,6 +5220,7 @@ void idPlayer::UpdateObjectiveInfo( void ) {
 /*
 ===============
 idPlayer::GiveObjective
+// ARMOD mess for buying menu
 ===============
 */
 void idPlayer::GiveObjective( const char *title, const char *text, const char *screenshot ) {
@@ -5206,6 +5231,8 @@ void idPlayer::GiveObjective( const char *title, const char *text, const char *s
 // RAVEN END
 	info.screenshot = screenshot;
 	inventory.objectiveNames.Append( info );
+	gameLocal.Printf("CURRENTLY IN THE OBJECTIVES MENU");
+	
 	if ( showNewObjectives ) {
 		ShowObjective( "newObjective" );
 	}

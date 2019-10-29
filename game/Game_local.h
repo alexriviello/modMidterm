@@ -858,7 +858,11 @@ public:
 	bool					IsTeamPowerups( void );
 
 	// twhitaker: needed this for difficulty settings
-	float					GetDifficultyModifier( void ) { const static float difficulty[] = { -0.3f, 0.0f, 0.4f, 0.8f }; return difficulty[ idMath::ClampInt( 0, 3, g_skill.GetInteger() ) ]; }
+	float					GetDifficultyModifier( void ) { 
+		const static float difficulty[] = { -0.3f, 0.0f, 0.4f, 0.8f 
+	}; 
+	return difficulty[ idMath::ClampInt( 0, 3, g_skill.GetInteger() ) ];
+	}
 
 	bool					IsMultiplayer( void ) { return isMultiplayer; }
 
