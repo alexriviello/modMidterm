@@ -601,7 +601,7 @@ entityDef player_marine
 {
 	"spawnclass"						"idPlayer"
 
-	"hud"							"guis/hud_strogg.gui" // MOD change HUD to strogg version from"guis/hud.gui"
+	"hud"							"guis/hud_strogg.gui" // ARMOD change HUD to strogg version from"guis/hud.gui"
 	"mphud"							"guis/mphud.gui" // mphud is overlayed on hud in multiplayer
 	"cursor"						"guis/cursor.gui"
 	"cinematicHud"						"guis/cinematic.gui"
@@ -619,7 +619,7 @@ entityDef player_marine
 	"joint_eyeOffset"					""
 	"joint_chestOffset"					"chest"
 
-	"model"							"model_player_strogg" // MOD change model to strogg version from "model_player_marine"
+	"model"							"model_player_strogg" // ARMOD change model to strogg version from "model_player_marine"
 	"articulatedFigure"					"player"
 	"ragdoll"						"player"
 
@@ -692,8 +692,8 @@ entityDef player_marine
 	// default weapons
 	// seperate multiple weapons with commas (no spaces).
 	// NOTE: default ammo must be specified explicitly.
-	"weapon"						"weapon_shotgun"	//MOD shotgun instead of blaster
-	"current_weapon"					"2"		//MOD change current weapon to hyperblaster, 3 instead of 0
+	"weapon"						"weapon_shotgun"	// ARMOD shotgun instead of blaster
+	"current_weapon"					"2"		// ARMOD change current weapon to hyperblaster, 3 instead of 0
 
 	"pm_jumpheight"						"48"
 	"pm_stepsize"						"16"
@@ -733,7 +733,7 @@ entityDef player_marine
 	"ammo_machinegun"					"0"
 	"ammo_nailgun"						"0"
 	"ammo_blaster"						"-1"
-	"ammo_shotgun"						"50"//MOD give sotgun ammo, 50 instead of 0
+	"ammo_shotgun"						"50" // ARMOD give sotgun ammo, 50 instead of 0
 	"ammo_hyperblaster"					"0" 
 	"ammo_rocketlauncher"					"0"
 	"ammo_grenadelauncher"					"0"
@@ -808,6 +808,8 @@ entityDef player_marine
 	"def_playerView"					"playerView_marine"
 }
 
+// ARMOD new player classes
+
 entityDef player_strogg
 {
 	"inherit"							"player_marine"
@@ -825,6 +827,68 @@ entityDef player_strogg
 	"maxhealth"							"125"
 	"armor"								"0"
 	"maxarmor"							"125"
+}
+
+entityDef player_slayer
+{
+	"inherit"							"player_marine"
+	"pm_speed"							"160" 			
+	"pm_walkspeed"						"100"	
+
+	// stats
+	"health"							"100"
+	"maxhealth"							"100"
+	"armor"								"0"
+	"maxarmor"							"100"
+	
+}
+
+entityDef player_tank
+{
+	"inherit"							"player_marine"
+	"hud"								"guis/hud_strogg.gui"
+	"wristcomm"							"guis/wristcomm_strogg.gui"
+	"pm_speed"							"230" 			
+	"pm_walkspeed"						"115"
+	"strogg"							"1"		
+
+	"def_head"							"char_marinehead_kanestrg"
+	"model"								"model_player_strogg"
+
+	// stats
+	"health"							"150"
+	"maxhealth"							"150"
+	"armor"								"25"
+	"maxarmor"							"150"
+
+	// default weapons
+	"weapon"						"weapon_blaster"	
+	"current_weapon"					"1"		
+}
+
+entityDef player_gunslinger
+{
+	"inherit"							"player_marine"
+	"pm_speed"							"230" 			
+	"pm_walkspeed"						"250"
+
+
+	// default weapons
+	// seperate multiple weapons with commas (no spaces).
+	// NOTE: default ammo must be specified explicitly.
+	"weapon"						"weapon_hyperblaster"	
+	"current_weapon"					"3"		
+
+	"pm_jumpheight"						"60"	
+
+	// stats
+	"health"							"75"
+	"maxhealth"							"75"
+	"armor"								"0"
+	"maxarmor"							"75"
+
+	// ammo
+		"ammo_hyperblaster"					"100" 
 }
 
 /*

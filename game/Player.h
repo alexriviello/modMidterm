@@ -887,6 +887,9 @@ private:
 
 	playerTourneyStatus_t	tourneyStatus;
 	bool					isStrogg;
+	bool					isSlayer;
+	bool					isTank;
+	bool					isGunslinger;
 
 	idInterpolate<float>	zoomFov;
 	idInterpolate<float>	centerView;

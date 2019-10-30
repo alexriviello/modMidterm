@@ -1129,7 +1129,7 @@ idPlayer::idPlayer() {
 // RITUAL BEGIN
 // squirrel: added DeadZone multiplayer mode
 	allowedToRespawn		= true;
-// squirrel: Mode-agnostic buymenus
+// squirrel: Mode-agnostic buymenus 
 	inBuyZone				= false;
 	inBuyZonePrev			= false;
 // RITUAL END
@@ -1343,29 +1343,42 @@ idPlayer::idPlayer() {
 	teamDoubler			= NULL;		
 	teamDoublerPending		= false;
 	// ARMOD implementing ChooseClass Method that chooses your player's class
-	ChooseClass();
+	//ChooseClass();
+		
 }
 
 // ARMOD choosing class
 void idPlayer::ChooseClass(void){
+	idEntity* eplayer;
+	eplayer = gameLocal.GetLocalPlayer();
+	idPlayer* player = static_cast<idPlayer *>(eplayer);
+
 	gameLocal.Printf("CLASS LEVEL %i", g_skill.GetInteger());
 	if (g_skill.GetInteger() == 0){
 		// Slayer class
-		inventory.maxHealth = 300;
-		health = 300;
-		inventory.maxarmor = 500;
-		Event.SetHealth(400);
-		Event.SetArmor(200);
-	}
+		GiveItem("weapon_shotgun")
+			player->health = 200;
+				
+			}
+		
 	if (g_skill.GetInteger() == 1){
 		// Tank class
+		GiveItem("weapon_blaster");
+		inventory.maxHealth = 150;
+		player->health = 150;
+		inventory.maxarmor = 125;
+		player->inventory.armor = 25;
+
 	}
 	if (g_skill.GetInteger() == 2){
 		// Gunslinger class
-
+		GiveItem("weapon_hyperblaster");
+		player->health = 75;
+		player->inventory.maxHealth = 75;
+		player->inventory.armor = 0;
+		player->inventory.maxarmor = 75;
 
 	}
-
 }
 
 /*
@@ -2042,7 +2055,6 @@ void idPlayer::Spawn( void ) {
 
 	// Skil levels
 	dynamicProtectionScale = 1.0f;
-	if ( !gameLocal.isMultiplayer ) {
 		if ( g_skill.GetInteger() < 2 ) {
 			if ( health < 25 ) {
 				health = 25;
@@ -2050,7 +2062,6 @@ void idPlayer::Spawn( void ) {
 		} else {
 			//g_armorProtection.SetFloat( ( g_skill.GetInteger() < 2 ) ? 0.4f : 0.2f );
 		}
-	}
 	
 	// Powerup joints?
 	if ( spawnArgs.GetString ( "powerup_effect_joints", "", temp ) ) {
@@ -3012,6 +3023,7 @@ idPlayer::RestorePersistantInfo
 Restores any inventory and player stats when changing levels.
 ===============
 */
+// ARMOD modify for roguelike
 void idPlayer::RestorePersistantInfo( void ) {
  	if ( gameLocal.isMultiplayer ) {
  		gameLocal.persistentPlayerInfo[entityNumber].Clear();
@@ -9312,7 +9324,13 @@ Called every tic for each player
 */
 void idPlayer::Think( void ) {
 	renderEntity_t *headRenderEnt;
- 
+
+	// ARMOD making new idEntity
+	idEntity* eplayer;
+	eplayer = gameLocal.GetLocalPlayer();
+	idPlayer* player = static_cast<idPlayer *>(eplayer);
+ // end ARMOD
+
 	if ( talkingNPC ) {
 		if ( !talkingNPC.IsValid() ) {
 			talkingNPC = NULL;
