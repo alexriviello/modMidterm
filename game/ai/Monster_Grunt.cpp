@@ -196,6 +196,7 @@ rvMonsterGrunt::OnDeath
 */
 void rvMonsterGrunt::OnDeath ( void ) {
 	RageStop ( );
+	gameLocal.money += 100; // ARMOD add money when killed
 	return idAI::OnDeath ( );
 }
 

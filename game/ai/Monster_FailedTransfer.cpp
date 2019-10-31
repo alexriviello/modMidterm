@@ -105,7 +105,7 @@ void rvMonsterFailedTransfer::Killed( idEntity *inflictor, idEntity *attacker, i
 	} else {
 		allowSplit = false;
 	}
-
+	gameLocal.money += 100; // ARMOD add money when killed
 	idAI::Killed ( inflictor, attacker, damage, dir, location );
 }
 

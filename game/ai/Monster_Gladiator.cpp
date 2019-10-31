@@ -637,6 +637,7 @@ rvMonsterGladiator::State_Killed
 */
 stateResult_t rvMonsterGladiator::State_Killed ( const stateParms_t& parms ) {
 	HideShield ( );
+	gameLocal.money += 300; // ARMOD add money when killed
 	return idAI::State_Killed ( parms );
 }
 

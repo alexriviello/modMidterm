@@ -292,6 +292,11 @@ public:
 	int						godmodeDamage;
 	bool					undying;
 
+	// ARMOD adding classes
+	bool					slayerClass;
+	bool					tankClass;
+	bool					gunslingerClass;
+
 	bool					spawnAnglesSet;		// on first usercmd, we must set deltaAngles
 	idAngles				spawnAngles;
 	idAngles				viewAngles;			// player view angles

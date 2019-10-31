@@ -189,7 +189,7 @@ entityDef item_health_small
 	"model"					"models/pick_ups/sp_pickups/sp_small_health.lwo"
 	"editor_usage"			"#str_107321"
 	"inv_name"				"#str_107321"
-	"inv_health"			"25"
+	"inv_health"			"5" // ARMOD lowere health
 	"snd_acquire"			"pickup_health_small"
 	"editor_ignore"			"0"
 }
@@ -215,7 +215,7 @@ entityDef item_health_large
 	//"inv_name"			"Large Health Pack"
 	"inv_name"				"#str_107322"
 
-	"inv_health"			"50"
+	"inv_health"			"20" // ARMOD lowered health
 	"snd_acquire"			"pickup_health_large"
 	"editor_ignore"			"0"
 }

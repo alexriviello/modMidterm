@@ -1677,6 +1677,7 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 	StopMove( MOVE_STATUS_DONE );
 
 	OnDeath();
+	gameLocal.money += 100; // ARMOD add money when killed
 	CheckDeathObjectives();
 
 	ClearEnemy();

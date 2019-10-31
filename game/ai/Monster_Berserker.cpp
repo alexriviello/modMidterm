@@ -408,6 +408,7 @@ stateResult_t rvMonsterBerserker::State_Killed	( const stateParms_t& parms ) {
 	StopEffect ( "fx_charge_up" );
 	StopEffect ( "fx_ambient_electricity" );
 	StopEffect ( "fx_ambient_electricity_mace" );
+	gameLocal.money += 250; // ARMOD add money when killed
 	return idAI::State_Killed ( parms );
 }
 

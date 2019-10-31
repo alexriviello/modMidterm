@@ -245,7 +245,7 @@ rvMonsterSentry::OnDeath
 */
 void rvMonsterSentry::OnDeath ( void ) {
 	idAI::OnDeath ( );
-	
+	gameLocal.money += 100; // ARMOD add money when killed
 	Explode ( true );
 }
 

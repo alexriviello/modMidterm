@@ -321,6 +321,10 @@ class rvGravityArea;
 
 class idGameLocal : public idGame {
 public:
+
+	// ARMOD 
+	int						money; // keep track of player's cash
+
 	idDict					serverInfo;				// all the tunable parameters, like numclients, etc
 	int						numClients;				// pulled from serverInfo and verified
 	idDict					userInfo[MAX_CLIENTS];	// client specific settings

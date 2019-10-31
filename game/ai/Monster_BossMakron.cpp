@@ -2120,6 +2120,8 @@ stateResult_t rvMonsterBossMakron::State_Killed ( const stateParms_t& parms ) {
 		STAGE_FALLLOOPWAIT,
 		STAGE_FALLENDWAIT
 	};
+	gameLocal.money += 1000; // ARMOD add money when killed
+
 	switch ( parms.stage ) {
 		case STAGE_FALLSTART:
 			DisableAnimState ( ANIMCHANNEL_LEGS );

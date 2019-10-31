@@ -750,6 +750,7 @@ void rvMonsterStroggHover::OnDeath ( void ) {
 			effectHover[i] = NULL;
 		}
 	}
+	gameLocal.money += 200; // ARMOD add money when killed
 
 	idAI::OnDeath ( );
 }

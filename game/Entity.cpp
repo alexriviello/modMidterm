@@ -491,7 +491,6 @@ idEntity::idEntity() {
 	renderView		= NULL;
 	cameraTarget	= NULL;
 	health			= 0;
-	money			= 0; // ARMOD, initializing money
 
 	physics			= NULL;
 	bindMaster		= NULL;

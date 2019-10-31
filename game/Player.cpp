@@ -1342,8 +1342,7 @@ idPlayer::idPlayer() {
 	teamAmmoRegenPending	= false;
 	teamDoubler			= NULL;		
 	teamDoublerPending		= false;
-	// ARMOD implementing ChooseClass Method that chooses your player's class
-	//ChooseClass();
+	
 		
 }
 
@@ -1352,33 +1351,31 @@ void idPlayer::ChooseClass(void){
 	idEntity* eplayer;
 	eplayer = gameLocal.GetLocalPlayer();
 	idPlayer* player = static_cast<idPlayer *>(eplayer);
-
+	
 	gameLocal.Printf("CLASS LEVEL %i", g_skill.GetInteger());
 	if (g_skill.GetInteger() == 0){
 		// Slayer class
-		GiveItem("weapon_shotgun")
-			player->health = 200;
-				
-			}
-		
+		slayerClass = true;
+		GiveStuffToPlayer(player, "weapon_shotgun", "1");
+		GiveStuffToPlayer(player, "item_health_mega", "1");
+	}
+
 	if (g_skill.GetInteger() == 1){
 		// Tank class
-		GiveItem("weapon_blaster");
-		inventory.maxHealth = 150;
-		player->health = 150;
-		inventory.maxarmor = 125;
-		player->inventory.armor = 25;
-
+		tankClass = true;
+		GiveStuffToPlayer(player, "item_armor_shard", "1");
+		GiveStuffToPlayer(player, "item_health_mega", "1");
+	
 	}
 	if (g_skill.GetInteger() == 2){
 		// Gunslinger class
-		GiveItem("weapon_hyperblaster");
-		player->health = 75;
-		player->inventory.maxHealth = 75;
-		player->inventory.armor = 0;
-		player->inventory.maxarmor = 75;
-
+		gunslingerClass = true;
+		GiveStuffToPlayer(player, "weapon_hyperblaster", "1");
+		GiveStuffToPlayer(player, "item_health_mega", "1");
+		
 	}
+
+	
 }
 
 /*
@@ -1539,6 +1536,12 @@ void idPlayer::Init( void ) {
 	godmode					= false;
 	godmodeDamage			= 0;
 	undying					= g_forceUndying.GetBool() ? !gameLocal.isMultiplayer : false;
+
+	// ARMOD flipping classes
+	slayerClass = false;
+	tankClass = false;
+	gunslingerClass = false;
+	ChooseClass();
 
 	oldButtons				= 0;
 	oldFlags				= 0;
@@ -9329,7 +9332,9 @@ void idPlayer::Think( void ) {
 	idEntity* eplayer;
 	eplayer = gameLocal.GetLocalPlayer();
 	idPlayer* player = static_cast<idPlayer *>(eplayer);
- // end ARMOD
+	gameLocal.Printf("MONEY IS NOW %i", gameLocal.money);
+	
+	// end ARMOD
 
 	if ( talkingNPC ) {
 		if ( !talkingNPC.IsValid() ) {
@@ -9689,6 +9694,21 @@ void idPlayer::Think( void ) {
 		inBuyZone = false;
 
 	inBuyZonePrev = false;
+	// ARMOD change max health, shield
+	if (slayerClass){
+		// Slayer class
+		inventory.maxHealth = 100;
+	}if (tankClass){
+		// Tank class
+		inventory.maxHealth = 150;
+		inventory.maxarmor = 150;
+	}
+
+	if (gunslingerClass){
+		// Gunslinger class
+		inventory.maxHealth = 75;
+		inventory.maxarmor = 75;
+	}
 }
 
 /*

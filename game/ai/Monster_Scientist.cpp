@@ -50,7 +50,7 @@ rvMonsterScientist::OnDeath
 */
 void rvMonsterScientist::OnDeath ( void ) {
 	StopEffect ( "fx_fly" );
-	
+	gameLocal.money += 300; // ARMOD add money when killed
 	idAI::OnDeath ( );
 }
 

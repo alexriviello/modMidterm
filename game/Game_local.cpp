@@ -243,6 +243,9 @@ idGameLocal::Clear
 ============
 */
 void idGameLocal::Clear( void ) {
+
+	money = 0; // ARMOD set money to 0
+
 	int i;
 
 	serverInfo.Clear();

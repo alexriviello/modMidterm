@@ -112,6 +112,7 @@ rvMonsterSlimyTransfer::OnDeath
 */
 void rvMonsterSlimyTransfer::OnDeath ( void ) {
 	StopEffect ( "fx_vomit_muzzle" );
+	gameLocal.money += 200; // ARMOD add money when killed
 	idAI::OnDeath ( );
 }
 

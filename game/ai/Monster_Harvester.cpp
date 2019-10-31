@@ -695,6 +695,7 @@ stateResult_t rvMonsterHarvester::State_Killed ( const stateParms_t& parms ) {
 	} else {
 		PlayAnim( ANIMCHANNEL_TORSO, "death", 0 );
 	}
+	gameLocal.money += 300; // ARMOD add money when killed
 	PostState ( "State_Dead" );
 	return SRESULT_DONE;	
 }
