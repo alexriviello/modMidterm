@@ -1351,7 +1351,12 @@ void idPlayer::ChooseClass(void){
 	idEntity* eplayer;
 	eplayer = gameLocal.GetLocalPlayer();
 	idPlayer* player = static_cast<idPlayer *>(eplayer);
-	player->GiveObjective("Cash: ", gameLocal.money);
+	player->GiveObjective("Upgrade Health: ", 1);
+	player->GiveObjective("Upgrade Shields: ", 1);
+	player->GiveObjective("Unlock weapon mod: ", 1);
+	player->GiveObjective("Unlock BFG: ", 1);
+	player->GiveObjective("Frienly marine: ", 1);
+
 	
 	gameLocal.Printf("CLASS LEVEL %i", g_skill.GetInteger());
 	if (g_skill.GetInteger() == 0){

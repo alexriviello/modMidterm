@@ -3781,11 +3781,15 @@ TIME_THIS_SCOPE("idGameLocal::RunFrame - gameDebug.BeginFrame()");
 		// nrausch: player could have been deleted in an event
 		player = GetLocalPlayer();
 
+		// ARMOD have cash show up on HUD
 		if (player){
+			idUserInterface* hud = player->GetHud();
 			idStr newHUD;
-			sprintf(newHUD, "Cash: %i", this->money);
-			player->hud->SetStateString("itemtext", newHUD);
-			player->hud->SetStateString("itemicon", "");
+			sprintf(newHUD, "Cash: $%i", this->money);
+			hud->SetStateString("itemtext", newHUD);
+			hud->SetStateString("itemicon", "");
+			hud->HandleNamedEvent("itemPickup");
+
 
 		}
 

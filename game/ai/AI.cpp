@@ -1681,7 +1681,6 @@ void idAI::Killed( idEntity *inflictor, idEntity *attacker, int damage, const id
 	eplayer = gameLocal.GetLocalPlayer();
 	idPlayer* player = static_cast<idPlayer *>(eplayer);
 	gameLocal.money += 100; // ARMOD add money when killed
-	player->GiveObjective("Cash: ", gameLocal.money); // ARMOD update
 	CheckDeathObjectives();
 
 	ClearEnemy();
