@@ -3456,6 +3456,100 @@ void idGameLocal::SortActiveEntityList( void ) {
 	sortPushers = false;
 }
 
+
+/////////////////// ARMOD CHANNGEEEE
+
+void idGameLocal::easyBuyMenu(UpgradeType upgrade) {
+	idEntity* eplayer;
+	eplayer = gameLocal.GetLocalPlayer();
+	idPlayer* player = static_cast<idPlayer *>(eplayer);
+
+	switch (upgrade) {
+	case UPGRADE_ONE:
+		if (money >= 100) {
+			money -= 100;
+			upgradeOne = true;
+			for (int i = 0; i < 10; i++) // Give full ammo
+				GiveStuffToPlayer(player, "weapon_machinegun", "1");
+		}
+		break;
+	case UPGRADE_TWO:
+		if (money >= 200) {
+			money -= 200;
+			upgradeTwo = true;
+			for (int i = 0; i < 10; i++) // Give full ammo
+				GiveStuffToPlayer(player, "weapon_machinegun", "1");
+		}
+		break;
+	case UPGRADE_THREE:
+		if (money >= 300) {
+			money -= 300;
+			upgradeThree = true;
+			for (int i = 0; i < 10; i++) // Give full ammo
+				GiveStuffToPlayer(player, "weapon_machinegun", "1");
+		}
+		break;
+	case UPGRADE_FOUR:
+		if (money >= 400) {
+			money -= 400;
+			upgradeFour = true;
+			for (int i = 0; i < 10; i++) // Give full ammo
+				GiveStuffToPlayer(player, "weapon_machinegun", "1");
+		}
+		break;
+	case UPGRADE_FIVE:
+		if (money >= 500) {
+			money -= 500;
+			upgradeFive = true;
+			for (int i = 0; i < 10; i++) // Give full ammo
+				GiveStuffToPlayer(player, "weapon_machinegun", "1");
+		}
+		break;
+	case UPGRADE_SIX:
+		if (money >= 500) {
+			money -= 500;
+			upgradeSix = true;
+			for (int i = 0; i < 10; i++) // Give full ammo
+				GiveStuffToPlayer(player, "weapon_machinegun", "1");
+		}
+		break;
+	case UPGRADE_SEVEN:
+		if (money >= 800) {
+			money -= 800;
+			upgradeSeven = true;
+			for (int i = 0; i < 10; i++) // Give full ammo
+				GiveStuffToPlayer(player, "weapon_machinegun", "1");
+		}
+		break;
+		case UPGRADE_EIGHT:
+		if (money >= 900) {
+			money -= 900;
+			upgradeEight = true;
+			for (int i = 0; i < 10; i++) // Give full ammo
+				GiveStuffToPlayer(player, "weapon_machinegun", "1");
+		}
+		break;
+		case UPGRADE_NINE:
+			if (money >= 1000) {
+				money -= 1000;
+				upgradeNine = true;
+				for (int i = 0; i < 10; i++) // Give full ammo
+					GiveStuffToPlayer(player, "weapon_machinegun", "1");
+			}
+			break;
+		case UPGRADE_TEN:
+			if (money >= 2000) {
+				money -= 2000;
+				upgradeTen = true;
+				for (int i = 0; i < 10; i++) // Give full ammo
+					GiveStuffToPlayer(player, "weapon_machinegun", "1");
+			}
+			break;
+	}
+}
+/////////////// ARMOD CHANNGGEEEE
+ 
+
 /*
 ================
 idGameLocal::MenuFrame
@@ -3686,6 +3780,14 @@ TIME_THIS_SCOPE("idGameLocal::RunFrame - gameDebug.BeginFrame()");
 
 		// nrausch: player could have been deleted in an event
 		player = GetLocalPlayer();
+
+		if (player){
+			idStr newHUD;
+			sprintf(newHUD, "Cash: %i", this->money);
+			player->hud->SetStateString("itemtext", newHUD);
+			player->hud->SetStateString("itemicon", "");
+
+		}
 
 		timer_events.Stop();
 

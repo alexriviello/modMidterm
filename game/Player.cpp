@@ -1351,27 +1351,28 @@ void idPlayer::ChooseClass(void){
 	idEntity* eplayer;
 	eplayer = gameLocal.GetLocalPlayer();
 	idPlayer* player = static_cast<idPlayer *>(eplayer);
+	player->GiveObjective("Cash: ", gameLocal.money);
 	
 	gameLocal.Printf("CLASS LEVEL %i", g_skill.GetInteger());
 	if (g_skill.GetInteger() == 0){
 		// Slayer class
 		slayerClass = true;
 		GiveStuffToPlayer(player, "weapon_shotgun", "1");
-		GiveStuffToPlayer(player, "item_health_mega", "1");
+		GiveStuffToPlayer(player, "item_health_large", "1");
 	}
 
 	if (g_skill.GetInteger() == 1){
 		// Tank class
 		tankClass = true;
 		GiveStuffToPlayer(player, "item_armor_small", "1");
-		GiveStuffToPlayer(player, "item_health_mega", "1");
+		GiveStuffToPlayer(player, "item_health_large", "1");
 	
 	}
 	if (g_skill.GetInteger() == 2){
 		// Gunslinger class
 		gunslingerClass = true;
 		GiveStuffToPlayer(player, "weapon_hyperblaster", "1");
-		GiveStuffToPlayer(player, "item_health_mega", "1");
+		GiveStuffToPlayer(player, "item_health_large", "1");
 		
 	}
 
@@ -3447,6 +3448,14 @@ void idPlayer::UpdateHudStats( idUserInterface *_hud ) {
 		_hud->SetStateFloat	( "player_armorpct", idMath::ClampFloat ( 0.0f, 1.0f, (float)inventory.armor / (float)inventory.maxarmor ) );
 		_hud->HandleNamedEvent ( "updateArmor" );
 	}
+
+	// ARMOD update cash on gui
+	temp = _hud->State().GetInt("player_money", "-1");
+	if (temp != gameLocal.money) {
+		_hud->SetStateInt("player_moneyDelta", temp == -1 ? 0 : (temp - gameLocal.money));
+		_hud->SetStateInt("player_money", gameLocal.money);
+		_hud->HandleNamedEvent("updateMoney");
+	}
 	
 	// Boss bar
 	if ( _hud->State().GetInt ( "boss_health", "-1" ) != (bossEnemy ? bossEnemy->health : -1) ) {
@@ -5209,6 +5218,7 @@ idPlayer::UpdateObjectiveInfo
 ==============
  */
 void idPlayer::UpdateObjectiveInfo( void ) {
+
 	if ( objectiveSystem == NULL ) {
 		return;
 	}
@@ -5235,21 +5245,22 @@ void idPlayer::UpdateObjectiveInfo( void ) {
 /*
 ===============
 idPlayer::GiveObjective
-// ARMOD mess for buying menu
+// ARMOD modified for buying menu
 ===============
 */
-void idPlayer::GiveObjective( const char *title, const char *text, const char *screenshot ) {
-	return; // ARMOD kill it
+void idPlayer::GiveObjective( const char *title, int value ) {
+
 	
 	idObjectiveInfo info;
-// RAVEN BEGIN
-	info.title = common->GetLocalizedString( title );
-	info.text = common->GetLocalizedString( text );
-// RAVEN END
-	info.screenshot = screenshot;
+	/////// ARMOD CHANGEEE
+
+	info.title = common->GetLocalizedString(title);
+	info.text = (idStr::FormatNumber(value));
+
+	gameLocal.Printf("using value: %1d\n", info.text);
+	//info.screenshot = screenshot;
 	inventory.objectiveNames.Append( info );
-	gameLocal.Printf("CURRENTLY IN THE OBJECTIVES MENU");
-	
+
 	if ( showNewObjectives ) {
 		ShowObjective( "newObjective" );
 	}
@@ -8611,6 +8622,39 @@ void idPlayer::PerformImpulse( int impulse ) {
 		case IMPULSE_40: {
 			idFuncRadioChatter::RepeatLast();
 			break;
+
+			// ARMOD buying
+
+		case 128:
+			gameLocal.easyBuyMenu(UPGRADE_ONE);
+			break;
+		case 129:
+			gameLocal.easyBuyMenu(UPGRADE_TWO);
+			break;
+		case 130:
+			gameLocal.easyBuyMenu(UPGRADE_THREE);
+			break;
+		case 131:
+			gameLocal.easyBuyMenu(UPGRADE_FOUR);
+			break;
+		case 132:
+			gameLocal.easyBuyMenu(UPGRADE_FIVE);
+			break;
+		case 133:
+			gameLocal.easyBuyMenu(UPGRADE_SIX);
+			break;
+		case 134:
+			gameLocal.easyBuyMenu(UPGRADE_SEVEN);
+			break;
+		case 135:
+			gameLocal.easyBuyMenu(UPGRADE_EIGHT);
+			break;
+		case 136:
+			gameLocal.easyBuyMenu(UPGRADE_NINE);
+			break;
+		case 137:
+			gameLocal.easyBuyMenu(UPGRADE_TEN);
+			break;
 		}
 
 // RITUAL BEGIN
@@ -9330,12 +9374,11 @@ Called every tic for each player
 void idPlayer::Think( void ) {
 	renderEntity_t *headRenderEnt;
 
-	/* ARMOD making new idEntity
+	// ARMOD making new idEntity
 	idEntity* eplayer;
 	eplayer = gameLocal.GetLocalPlayer();
 	idPlayer* player = static_cast<idPlayer *>(eplayer);
-	gameLocal.Printf("MONEY IS NOW %i", gameLocal.money);
-	*/
+//	gameLocal.Printf("MONEY IS NOW %i", gameLocal.money);
 
 	// end ARMOD
 
@@ -9711,6 +9754,10 @@ void idPlayer::Think( void ) {
 		// Gunslinger class
 		inventory.maxHealth = 75;
 		inventory.maxarmor = 75;
+	}
+	if (gameLocal.upgradeOne)
+	{
+
 	}
 }
 

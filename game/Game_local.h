@@ -319,21 +319,41 @@ class rvGravityArea;
 
 //============================================================================
 
+
+// ARMOD 
+
+enum UpgradeType {
+	UPGRADE_ONE,
+	UPGRADE_TWO,
+	UPGRADE_THREE,
+	UPGRADE_FOUR,
+	UPGRADE_FIVE,
+	UPGRADE_SIX,
+	UPGRADE_SEVEN,
+	UPGRADE_EIGHT,
+	UPGRADE_NINE,
+	UPGRADE_TEN
+};
+
+
+
 class idGameLocal : public idGame {
 public:
 
 	// ARMOD adding money int, bools for persistant upgrades
 	int						money; // keep track of player's cash
-	bool					upgradeOne;
-	bool					upgradeTwo;
-	bool					upgradeThree;
-	bool					upgradeFour;
-	bool					upgradeFive;
-	bool					upgradeSix;
-	bool					upgradeSeven;
-	bool					upgradeEight;
-	bool					upgradeNine;
-	bool					upgradeTen;
+	bool					upgradeOne =	false;
+	bool					upgradeTwo =	false;
+	bool					upgradeThree = false;
+	bool					upgradeFour = false;
+	bool					upgradeFive = false;
+	bool					upgradeSix = false;
+	bool					upgradeSeven = false;
+	bool					upgradeEight = false;
+	bool					upgradeNine = false;
+	bool					upgradeTen = false;
+
+	virtual void			easyBuyMenu(UpgradeType upgrade);
 
 	idDict					serverInfo;				// all the tunable parameters, like numclients, etc
 	int						numClients;				// pulled from serverInfo and verified
