@@ -1351,26 +1351,25 @@ void idPlayer::ChooseClass(void){
 	idEntity* eplayer;
 	eplayer = gameLocal.GetLocalPlayer();
 	idPlayer* player = static_cast<idPlayer *>(eplayer);
-	player->GiveObjective("Upgrade Health: ", 1);
-	player->GiveObjective("Upgrade Shields: ", 1);
-	player->GiveObjective("Unlock weapon mod: ", 1);
-	player->GiveObjective("Unlock BFG: ", 1);
-	player->GiveObjective("Frienly marine: ", 1);
-
+	player->GiveObjective("Upgrade Health: $100 \nUpgrade Shields: $100 points \nUnlock weapon mod: $500 \nFriendly marine: $800 \nUnlock BFG: $2000", 1);
 	
 	gameLocal.Printf("CLASS LEVEL %i", g_skill.GetInteger());
 	if (g_skill.GetInteger() == 0){
 		// Slayer class
 		slayerClass = true;
 		GiveStuffToPlayer(player, "weapon_shotgun", "1");
-		GiveStuffToPlayer(player, "item_health_large", "1");
+		for (int i = 0; i < 6; i++){
+			GiveStuffToPlayer(player, "item_health_large", "1");
+		}
 	}
 
 	if (g_skill.GetInteger() == 1){
 		// Tank class
 		tankClass = true;
 		GiveStuffToPlayer(player, "item_armor_small", "1");
-		GiveStuffToPlayer(player, "item_health_large", "1");
+		for (int i = 0; i < 6; i++){
+			GiveStuffToPlayer(player, "item_health_large", "1");
+		};
 	
 	}
 	if (g_skill.GetInteger() == 2){
@@ -1378,12 +1377,56 @@ void idPlayer::ChooseClass(void){
 		gunslingerClass = true;
 		GiveStuffToPlayer(player, "weapon_hyperblaster", "1");
 		GiveStuffToPlayer(player, "item_health_large", "1");
+		GiveStuffToPlayer(player, "item_health_large", "1");
 		
 	}
 
 	
 }
 
+// ARMOD check for upgrades
+void idPlayer::CheckUpgrade(void){
+	idEntity* eplayer;
+	eplayer = gameLocal.GetLocalPlayer();
+	idPlayer* player = static_cast<idPlayer *>(eplayer);
+	if (gameLocal.upgradeOne)	{
+		player->GivePowerUp(POWERUP_REGENERATION, SEC2MS(60));
+	}
+	if (gameLocal.upgradeTwo)	{
+		player->GivePowerUp(POWERUP_QUADDAMAGE, SEC2MS(60));
+	}
+	if (gameLocal.upgradeThree)	{
+		inventory.maxHealth = 200;
+	}
+	if (gameLocal.upgradeFour)	{
+		inventory.maxarmor = 200;
+	}
+	if (gameLocal.upgradeFive)	{
+		GiveStuffToPlayer(this, "weapon_shotgun", "1");
+		player->GiveWeaponMod("weaponmod_shotgun_ammo");
+	}
+	if (gameLocal.upgradeSix)	{
+		GiveStuffToPlayer(this, "weapon_hyperblaster", "1");
+		player->GiveWeaponMod("weaponmod_hyperblaster_bounce");
+	}
+	if (gameLocal.upgradeSeven){
+		GiveStuffToPlayer(this, "weapon_nailgun", "1");
+		player->GiveWeaponMod("weaponmod_nailgun_power");
+		player->GiveWeaponMod("weaponmod_nailgun_rof");
+		player->GiveWeaponMod("weaponmod_nailgun_ammo");
+		player->GiveWeaponMod("weaponmod_nailgun_seek");
+		
+	}
+	if (gameLocal.upgradeEight){
+		GiveStuffToPlayer(this, "weapon_rocketlauncher", "1");
+	}
+	if (gameLocal.upgradeNine){
+		// spawn char_marine
+	}
+	if (gameLocal.upgradeTen){
+	   GiveStuffToPlayer(this, "weapon_darkmattergun", "1");
+	}
+}
 /*
 ==============
 idPlayer::SetShowHud
@@ -3033,7 +3076,6 @@ idPlayer::RestorePersistantInfo
 Restores any inventory and player stats when changing levels.
 ===============
 */
-// ARMOD modify for roguelike
 void idPlayer::RestorePersistantInfo( void ) {
  	if ( gameLocal.isMultiplayer ) {
  		gameLocal.persistentPlayerInfo[entityNumber].Clear();
@@ -3454,13 +3496,14 @@ void idPlayer::UpdateHudStats( idUserInterface *_hud ) {
 		_hud->HandleNamedEvent ( "updateArmor" );
 	}
 
-	// ARMOD update cash on gui
+	/* ARMOD attempted to use this to update cash on gui, failed
 	temp = _hud->State().GetInt("player_money", "-1");
 	if (temp != gameLocal.money) {
 		_hud->SetStateInt("player_moneyDelta", temp == -1 ? 0 : (temp - gameLocal.money));
 		_hud->SetStateInt("player_money", gameLocal.money);
 		_hud->HandleNamedEvent("updateMoney");
 	}
+	*/
 	
 	// Boss bar
 	if ( _hud->State().GetInt ( "boss_health", "-1" ) != (bossEnemy ? bossEnemy->health : -1) ) {
@@ -5257,13 +5300,11 @@ void idPlayer::GiveObjective( const char *title, int value ) {
 
 	
 	idObjectiveInfo info;
-	/////// ARMOD CHANGEEE
-
 	info.title = common->GetLocalizedString(title);
 	info.text = (idStr::FormatNumber(value));
 
 	gameLocal.Printf("using value: %1d\n", info.text);
-	//info.screenshot = screenshot;
+	//info.screenshot = screenshot; ARMOD no screens needed
 	inventory.objectiveNames.Append( info );
 
 	if ( showNewObjectives ) {
@@ -9379,14 +9420,12 @@ Called every tic for each player
 void idPlayer::Think( void ) {
 	renderEntity_t *headRenderEnt;
 
-	// ARMOD making new idEntity
+	/* ARMOD making new idEntity
 	idEntity* eplayer;
 	eplayer = gameLocal.GetLocalPlayer();
 	idPlayer* player = static_cast<idPlayer *>(eplayer);
-//	gameLocal.Printf("MONEY IS NOW %i", gameLocal.money);
-
-	// end ARMOD
-
+	gameLocal.Printf("MONEY IS NOW %i", gameLocal.money);
+*/
 	if ( talkingNPC ) {
 		if ( !talkingNPC.IsValid() ) {
 			talkingNPC = NULL;
@@ -9760,10 +9799,7 @@ void idPlayer::Think( void ) {
 		inventory.maxHealth = 75;
 		inventory.maxarmor = 75;
 	}
-	if (gameLocal.upgradeOne)
-	{
-
-	}
+	CheckUpgrade();
 }
 
 /*
@@ -14123,7 +14159,7 @@ void idPlayer::ClampCash( float minCash, float maxCash )
 		buyMenuCash = maxCash;
 }
 
-// ARMOD keep an eye here
+
 void idPlayer::GiveCash( float cashDeltaAmount )
 {
 	//int minCash = gameLocal.mpGame.mpBuyingManager.GetIntValueForKey( "playerMinCash", 0 );
