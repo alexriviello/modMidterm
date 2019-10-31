@@ -20,7 +20,7 @@ Build the game as usual. Copy the Gamex86.dll file from Release and copy it into
 ### Personal Deliverables
 
 - [x] Classes (three to choose from)
-- [ ] Consistency between playthroughs for bonuses that have been unlocked
+- [x] Consistency between playthroughs for bonuses that have been unlocked
 - [x] Loot drops for all enemy types
 - [ ] 10 upgrades for weapons, powers, and abilities
 
