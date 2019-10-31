@@ -3693,9 +3693,8 @@ void idAI::OnDeath( void ){
 		spawnArgs.Set( "def_dropsItem1", "" );
 	}else{
 	//	idPlayer::GiveCash(100.0);
-		// Fixme!  Better guys should drop better stuffs!  Make drops related to guy type?  Do something cooler here?
 		if( rVal < 25 ){	// Half of guys drop nothing?
-			spawnArgs.Set( "def_dropsItem1", "item_health_large" );
+			spawnArgs.Set( "def_dropsItem1", "items_ammo_default" );
 		}else if( rVal < 50 ){
 			spawnArgs.Set( "def_dropsItem1", "item_health_small" );
 		}

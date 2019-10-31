@@ -322,8 +322,18 @@ class rvGravityArea;
 class idGameLocal : public idGame {
 public:
 
-	// ARMOD 
+	// ARMOD adding money int, bools for persistant upgrades
 	int						money; // keep track of player's cash
+	bool					upgradeOne;
+	bool					upgradeTwo;
+	bool					upgradeThree;
+	bool					upgradeFour;
+	bool					upgradeFive;
+	bool					upgradeSix;
+	bool					upgradeSeven;
+	bool					upgradeEight;
+	bool					upgradeNine;
+	bool					upgradeTen;
 
 	idDict					serverInfo;				// all the tunable parameters, like numclients, etc
 	int						numClients;				// pulled from serverInfo and verified

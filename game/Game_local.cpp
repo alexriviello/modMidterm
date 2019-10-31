@@ -244,7 +244,19 @@ idGameLocal::Clear
 */
 void idGameLocal::Clear( void ) {
 
+
+	// ARMOD setting money
 	money = 0; // ARMOD set money to 0
+	upgradeOne = false;
+	upgradeTwo = false;
+	upgradeThree = false;
+	upgradeFour = false;
+	upgradeFive = false;
+	upgradeSix = false;
+	upgradeSeven = false;
+	upgradeEight = false;
+	upgradeNine = false;
+	upgradeTen = false;
 
 	int i;
 

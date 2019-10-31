@@ -1363,7 +1363,7 @@ void idPlayer::ChooseClass(void){
 	if (g_skill.GetInteger() == 1){
 		// Tank class
 		tankClass = true;
-		GiveStuffToPlayer(player, "item_armor_shard", "1");
+		GiveStuffToPlayer(player, "item_armor_small", "1");
 		GiveStuffToPlayer(player, "item_health_mega", "1");
 	
 	}
@@ -1541,6 +1541,7 @@ void idPlayer::Init( void ) {
 	slayerClass = false;
 	tankClass = false;
 	gunslingerClass = false;
+
 	ChooseClass();
 
 	oldButtons				= 0;
@@ -4299,7 +4300,6 @@ bool idPlayer::GiveItem( idItem *item ) {
 	
 	// Show the item pickup on the hud
 	if ( hud ) {
-		// ARMOD modify for cash amount
 		idStr langToken = item->spawnArgs.GetString( "inv_name" );
 		hud->SetStateString ( "itemtext", common->GetLocalizedString( langToken ) );
 		hud->SetStateString ( "itemicon", item->spawnArgs.GetString( "inv_icon" ) );
@@ -5239,6 +5239,8 @@ idPlayer::GiveObjective
 ===============
 */
 void idPlayer::GiveObjective( const char *title, const char *text, const char *screenshot ) {
+	return; // ARMOD kill it
+	
 	idObjectiveInfo info;
 // RAVEN BEGIN
 	info.title = common->GetLocalizedString( title );
@@ -9328,12 +9330,13 @@ Called every tic for each player
 void idPlayer::Think( void ) {
 	renderEntity_t *headRenderEnt;
 
-	// ARMOD making new idEntity
+	/* ARMOD making new idEntity
 	idEntity* eplayer;
 	eplayer = gameLocal.GetLocalPlayer();
 	idPlayer* player = static_cast<idPlayer *>(eplayer);
 	gameLocal.Printf("MONEY IS NOW %i", gameLocal.money);
-	
+	*/
+
 	// end ARMOD
 
 	if ( talkingNPC ) {
