@@ -8532,38 +8532,38 @@ void idPlayer::GenerateImpulseForBuyAttempt( const char* itemName ) {
 idPlayer::PerformImpulse
 ==============
 */
-void idPlayer::PerformImpulse( int impulse ) {
+void idPlayer::PerformImpulse(int impulse) {
 
-//RAVEN BEGIN
-// nrausch: Don't send xenon dpad impulses over the network
+	//RAVEN BEGIN
+	// nrausch: Don't send xenon dpad impulses over the network
 #ifdef _XENON
-	
+
 	if ( objectiveSystemOpen ) {
 		return;
 	}
-	
+
 	if ( gameLocal.isClient && (impulse < IMPULSE_70) ) {
 #else
-	if ( gameLocal.isClient ) {
+	if (gameLocal.isClient) {
 #endif
-//RAVEN END
+		//RAVEN END
 		idBitMsg	msg;
 		byte		msgBuf[MAX_EVENT_PARAM_SIZE];
 
- 		assert( entityNumber == gameLocal.localClientNum );
-		msg.Init( msgBuf, sizeof( msgBuf ) );
+		assert(entityNumber == gameLocal.localClientNum);
+		msg.Init(msgBuf, sizeof(msgBuf));
 		msg.BeginWriting();
-		msg.WriteBits( impulse, IMPULSE_NUMBER_OF_BITS );
-		ClientSendEvent( EVENT_IMPULSE, &msg );
+		msg.WriteBits(impulse, IMPULSE_NUMBER_OF_BITS);
+		ClientSendEvent(EVENT_IMPULSE, &msg);
 	}
 
-	if ( impulse >= IMPULSE_0 && impulse <= IMPULSE_12 ) {
-		SelectWeapon( impulse, false );
+	if (impulse >= IMPULSE_0 && impulse <= IMPULSE_12) {
+		SelectWeapon(impulse, false);
 		return;
 	}
 
-//RAVEN BEGIN
-//asalmon: D-pad events for in game guis on Xenon
+	//RAVEN BEGIN
+	//asalmon: D-pad events for in game guis on Xenon
 #ifdef _XBOX
 	sysEvent_t ev;
 	ev.evType = SE_KEY;
@@ -8575,198 +8575,198 @@ void idPlayer::PerformImpulse( int impulse ) {
 	idUserInterface *ui = ActiveGui();
 	bool updateVisuals = false;
 #endif
-//RAVEN END
+	//RAVEN END
 
-	switch( impulse ) {
-		case IMPULSE_13: {
-			Reload();
-			break;
-		}
-		case IMPULSE_14: {
-			NextWeapon();
-			if( gameLocal.isServer && spectating && gameLocal.gameType == GAME_TOURNEY ) {	
-				((rvTourneyGameState*)gameLocal.mpGame.GetGameState())->SpectateCycleNext( this );
-			}
-			break;
-		}
-		case IMPULSE_15: {
-			PrevWeapon();
-			if( gameLocal.isServer && spectating && gameLocal.gameType == GAME_TOURNEY ) {	
-				((rvTourneyGameState*)gameLocal.mpGame.GetGameState())->SpectateCyclePrev( this );
-			}
-			break;
-		}
-		case IMPULSE_17: {
- 			if ( gameLocal.isClient || entityNumber == gameLocal.localClientNum ) {
- 				gameLocal.mpGame.ToggleReady( );
-			}
-			break;
-		}
-		case IMPULSE_18: {
-			centerView.Init(gameLocal.time, 200, viewAngles.pitch, 0);
-			break;
-		}
-		case IMPULSE_19: {
-/*		
-			// when we're not in single player, IMPULSE_19 is used for showScores
-			// otherwise it does IMPULSE_12 (PDA)
-			if ( !gameLocal.isMultiplayer ) {
-				if ( !objectiveSystemOpen ) {
-					if ( weapon ) {
-						weapon->Hide ();
-					}
-				}
-				ToggleMap();
-			}
-*/
-			break;
-		}
-		case IMPULSE_20: {
- 			if ( gameLocal.isClient || entityNumber == gameLocal.localClientNum ) {
- 				gameLocal.mpGame.ToggleTeam( );
-			}
-			break;
-		}
-		case IMPULSE_21: {
-			if( gameLocal.isServer && gameLocal.gameType == GAME_TOURNEY ) {
-				// only allow a client to join the waiting arena if they are not currently assigned to an arena
-
-				// removed waiting arena functionality for now
-				/*rvTourneyArena& arena = ((rvTourneyGameState*)gameLocal.mpGame.GetGameState())->GetArena( GetArena() );
-
-				if( this != arena.GetPlayers()[ 0 ] && this != arena.GetPlayers()[ 1 ] ) {
-					if( instance == MAX_ARENAS && !spectating ) {
-						ServerSpectate( true );
-						JoinInstance( ((rvTourneyGameState*)gameLocal.mpGame.GetGameState())->GetNextActiveArena( 0 ) );
-					} else if( spectating ) {
-						JoinInstance( MAX_ARENAS );
-						ServerSpectate( false );
-					}
-				}*/
-			}
-			break;
-		}
-		case IMPULSE_22: {
- 			if ( gameLocal.isClient || entityNumber == gameLocal.localClientNum ) {
- 				gameLocal.mpGame.ToggleSpectate( );
-   			}
-   			break;
-   		}
-				
-		case IMPULSE_28: {
- 			if ( gameLocal.isClient || entityNumber == gameLocal.localClientNum ) {
- 				gameLocal.mpGame.CastVote( gameLocal.localClientNum, true );
-   			}
-   			break;
-   		}
-   		case IMPULSE_29: {
- 			if ( gameLocal.isClient || entityNumber == gameLocal.localClientNum ) {
-				gameLocal.mpGame.CastVote( gameLocal.localClientNum, false );
-   			}
-   			break;
-   		}
-		case IMPULSE_40: {
-			idFuncRadioChatter::RepeatLast();
-			break;
-
-			// ARMOD buying
-
-		case 128:
-			gameLocal.easyBuyMenu(UPGRADE_ONE);
-			break;
-		case 129:
-			gameLocal.easyBuyMenu(UPGRADE_TWO);
-			break;
-		case 130:
-			gameLocal.easyBuyMenu(UPGRADE_THREE);
-			break;
-		case 131:
-			gameLocal.easyBuyMenu(UPGRADE_FOUR);
-			break;
-		case 132:
-			gameLocal.easyBuyMenu(UPGRADE_FIVE);
-			break;
-		case 133:
-			gameLocal.easyBuyMenu(UPGRADE_SIX);
-			break;
-		case 134:
-			gameLocal.easyBuyMenu(UPGRADE_SEVEN);
-			break;
-		case 135:
-			gameLocal.easyBuyMenu(UPGRADE_EIGHT);
-			break;
-		case 136:
-			gameLocal.easyBuyMenu(UPGRADE_NINE);
-			break;
-		case 137:
-			gameLocal.easyBuyMenu(UPGRADE_TEN);
-			break;
-		}
-
-// RITUAL BEGIN
-// squirrel: Mode-agnostic buymenus
-		case IMPULSE_100:	AttemptToBuyItem( "weapon_shotgun" );				break;
-		case IMPULSE_101:	AttemptToBuyItem( "weapon_machinegun" );			break;
-		case IMPULSE_102:	AttemptToBuyItem( "weapon_hyperblaster" );			break;
-		case IMPULSE_103:	AttemptToBuyItem( "weapon_grenadelauncher" );		break;
-		case IMPULSE_104:	AttemptToBuyItem( "weapon_nailgun" );				break;
-		case IMPULSE_105:	AttemptToBuyItem( "weapon_rocketlauncher" );		break;
-		case IMPULSE_106:	AttemptToBuyItem( "weapon_railgun" );				break;
-		case IMPULSE_107:	AttemptToBuyItem( "weapon_lightninggun" );			break;
-		case IMPULSE_108:	break; // Unused
-		case IMPULSE_109:	AttemptToBuyItem( "weapon_napalmgun" );				break;
-		case IMPULSE_110:	/* AttemptToBuyItem( "weapon_dmg" );*/				break;
-		case IMPULSE_111:	break; // Unused
-		case IMPULSE_112:	break; // Unused
-		case IMPULSE_113:	break; // Unused
-		case IMPULSE_114:	break; // Unused
-		case IMPULSE_115:	break; // Unused
-		case IMPULSE_116:	break; // Unused
-		case IMPULSE_117:	break; // Unused
-		case IMPULSE_118:	AttemptToBuyItem( "item_armor_small" );				break;
-		case IMPULSE_119:	AttemptToBuyItem( "item_armor_large" );				break;
-		case IMPULSE_120:	AttemptToBuyItem( "ammorefill" );					break;
-		case IMPULSE_121:	break; // Unused
-		case IMPULSE_122:	break; // Unused
-		case IMPULSE_123:	AttemptToBuyItem( "ammo_regen" );					break;
-		case IMPULSE_124:	AttemptToBuyItem( "health_regen" );					break;
-		case IMPULSE_125:	AttemptToBuyItem( "damage_boost" );					break;
-		case IMPULSE_126:	break; // Unused
-		case IMPULSE_127:	break; // Unused
-// RITUAL END
-
-		case IMPULSE_50: {
-			ToggleFlashlight ( );
-			break;
-		}
-
- 		case IMPULSE_51: {
- 			LastWeapon();
- 			break;
- 		}
-	} 
-
-//RAVEN BEGIN
-//asalmon: route d-pad input to the active gui.
-#ifdef _XBOX
-	if (ui && ev.evValue != 0 && !objectiveSystemOpen ) {
-		command = ui->HandleEvent( &ev, gameLocal.time, &updateVisuals );
-		if ( updateVisuals && focusEnt && ui == focusUI ) {
-			focusEnt->UpdateVisuals();
-		}
-
-		if ( gameLocal.isClient ) {
-			// we predict enough, but don't want to execute commands
-			return;
-		} 
-		if ( focusEnt ) {
-			HandleGuiCommands( focusEnt, command );
-		} else {
-			HandleGuiCommands( this, command );
-		}
+	switch (impulse) {
+	case IMPULSE_13: {
+		Reload();
+		break;
 	}
+	case IMPULSE_14: {
+		NextWeapon();
+		if (gameLocal.isServer && spectating && gameLocal.gameType == GAME_TOURNEY) {
+			((rvTourneyGameState*)gameLocal.mpGame.GetGameState())->SpectateCycleNext(this);
+		}
+		break;
+	}
+	case IMPULSE_15: {
+		PrevWeapon();
+		if (gameLocal.isServer && spectating && gameLocal.gameType == GAME_TOURNEY) {
+			((rvTourneyGameState*)gameLocal.mpGame.GetGameState())->SpectateCyclePrev(this);
+		}
+		break;
+	}
+	case IMPULSE_17: {
+		if (gameLocal.isClient || entityNumber == gameLocal.localClientNum) {
+			gameLocal.mpGame.ToggleReady();
+		}
+		break;
+	}
+	case IMPULSE_18: {
+		centerView.Init(gameLocal.time, 200, viewAngles.pitch, 0);
+		break;
+	}
+	case IMPULSE_19: {
+		/*
+					// when we're not in single player, IMPULSE_19 is used for showScores
+					// otherwise it does IMPULSE_12 (PDA)
+					if ( !gameLocal.isMultiplayer ) {
+					if ( !objectiveSystemOpen ) {
+					if ( weapon ) {
+					weapon->Hide ();
+					}
+					}
+					ToggleMap();
+					}
+					*/
+		break;
+	}
+	case IMPULSE_20: {
+		if (gameLocal.isClient || entityNumber == gameLocal.localClientNum) {
+			gameLocal.mpGame.ToggleTeam();
+		}
+		break;
+	}
+	case IMPULSE_21: {
+		if (gameLocal.isServer && gameLocal.gameType == GAME_TOURNEY) {
+			// only allow a client to join the waiting arena if they are not currently assigned to an arena
+
+			// removed waiting arena functionality for now
+			/*rvTourneyArena& arena = ((rvTourneyGameState*)gameLocal.mpGame.GetGameState())->GetArena( GetArena() );
+
+			if( this != arena.GetPlayers()[ 0 ] && this != arena.GetPlayers()[ 1 ] ) {
+			if( instance == MAX_ARENAS && !spectating ) {
+			ServerSpectate( true );
+			JoinInstance( ((rvTourneyGameState*)gameLocal.mpGame.GetGameState())->GetNextActiveArena( 0 ) );
+			} else if( spectating ) {
+			JoinInstance( MAX_ARENAS );
+			ServerSpectate( false );
+			}
+			}*/
+		}
+		break;
+	}
+	case IMPULSE_22: {
+		if (gameLocal.isClient || entityNumber == gameLocal.localClientNum) {
+			gameLocal.mpGame.ToggleSpectate();
+		}
+		break;
+	}
+
+	case IMPULSE_28: {
+		if (gameLocal.isClient || entityNumber == gameLocal.localClientNum) {
+			gameLocal.mpGame.CastVote(gameLocal.localClientNum, true);
+		}
+		break;
+	}
+	case IMPULSE_29: {
+		if (gameLocal.isClient || entityNumber == gameLocal.localClientNum) {
+			gameLocal.mpGame.CastVote(gameLocal.localClientNum, false);
+		}
+		break;
+	}
+	case IMPULSE_40: {
+		idFuncRadioChatter::RepeatLast();
+		break;
+	}
+
+		// RITUAL BEGIN
+		// squirrel: Mode-agnostic buymenus
+	case IMPULSE_100:	AttemptToBuyItem("weapon_shotgun");				break;
+	case IMPULSE_101:	AttemptToBuyItem("weapon_machinegun");			break;
+	case IMPULSE_102:	AttemptToBuyItem("weapon_hyperblaster");			break;
+	case IMPULSE_103:	AttemptToBuyItem("weapon_grenadelauncher");		break;
+	case IMPULSE_104:	AttemptToBuyItem("weapon_nailgun");				break;
+	case IMPULSE_105:	AttemptToBuyItem("weapon_rocketlauncher");		break;
+	case IMPULSE_106:	AttemptToBuyItem("weapon_railgun");				break;
+	case IMPULSE_107:	AttemptToBuyItem("weapon_lightninggun");			break;
+	case IMPULSE_108:	break; // Unused
+	case IMPULSE_109:	AttemptToBuyItem("weapon_napalmgun");				break;
+	case IMPULSE_110:	/* AttemptToBuyItem( "weapon_dmg" );*/				break;
+	case IMPULSE_111:	break; // Unused
+	case IMPULSE_112:	break; // Unused
+	case IMPULSE_113:	break; // Unused
+	case IMPULSE_114:	break; // Unused
+	case IMPULSE_115:	break; // Unused
+	case IMPULSE_116:	break; // Unused
+	case IMPULSE_117:	break; // Unused
+	case IMPULSE_118:	AttemptToBuyItem("item_armor_small");				break;
+	case IMPULSE_119:	AttemptToBuyItem("item_armor_large");				break;
+	case IMPULSE_120:	AttemptToBuyItem("ammorefill");					break;
+	case IMPULSE_121:	break; // Unused
+	case IMPULSE_122:	break; // Unused
+	case IMPULSE_123:	AttemptToBuyItem("ammo_regen");					break;
+	case IMPULSE_124:	AttemptToBuyItem("health_regen");					break;
+	case IMPULSE_125:	AttemptToBuyItem("damage_boost");					break;
+	case IMPULSE_126:	break; // Unused
+	case IMPULSE_127:	break; // Unused
+		// RITUAL END
+
+	case IMPULSE_50: {
+		ToggleFlashlight();
+		break;
+	}
+
+	case IMPULSE_51: {
+		LastWeapon();
+		break;
+	}
+
+					 // ARMOD buying
+					 switch (impulse)
+	case 76:
+		gameLocal.easyBuyMenu(UPGRADE_ONE); // h
+		break;
+	case 77:
+		gameLocal.easyBuyMenu(UPGRADE_TWO); //i
+		break;
+	case 78:
+		gameLocal.easyBuyMenu(UPGRADE_THREE); // j
+		break;
+	case 79:
+		gameLocal.easyBuyMenu(UPGRADE_FOUR); // k
+		break;
+	case 80:
+		gameLocal.easyBuyMenu(UPGRADE_FIVE); //l
+		break;
+	case 81:
+		gameLocal.easyBuyMenu(UPGRADE_SIX); //o
+		break;
+	case 82:
+		gameLocal.easyBuyMenu(UPGRADE_SEVEN); //p
+		break;
+	case 83:
+		gameLocal.easyBuyMenu(UPGRADE_EIGHT); //t
+		break;
+	case 84:
+		gameLocal.easyBuyMenu(UPGRADE_NINE); //b
+		break;
+	case 85:
+		gameLocal.easyBuyMenu(UPGRADE_TEN); //n
+		break;
+
+					 //RAVEN BEGIN
+					 //asalmon: route d-pad input to the active gui.
+#ifdef _XBOX
+					 if (ui && ev.evValue != 0 && !objectiveSystemOpen ) {
+						 command = ui->HandleEvent( &ev, gameLocal.time, &updateVisuals );
+						 if ( updateVisuals && focusEnt && ui == focusUI ) {
+							 focusEnt->UpdateVisuals();
+						 }
+
+						 if ( gameLocal.isClient ) {
+							 // we predict enough, but don't want to execute commands
+							 return;
+						 } 
+						 if ( focusEnt ) {
+							 HandleGuiCommands( focusEnt, command );
+						 } else {
+							 HandleGuiCommands( this, command );
+						 }
+					 }
 #endif
-//RAVEN END
+					 //RAVEN END
+	}
 }
    
 /*
