@@ -1351,7 +1351,7 @@ void idPlayer::ChooseClass(void){
 	idEntity* eplayer;
 	eplayer = gameLocal.GetLocalPlayer();
 	idPlayer* player = static_cast<idPlayer *>(eplayer);
-	player->GiveObjective("Upgrade Health: $100 \nUpgrade Shields: $100 points \nUnlock weapon mod: $500 \nFriendly marine: $800 \nUnlock BFG: $2000", 1);
+	player->GiveObjective("Regeneration: $500\n Quaddamage:: $500\n Upgrade Health: $1000 \nUpgrade Shields: $1000 points \nUpgraded shotgun: $1200 \nUpgraded hyperblaster: $1200 \nFully kitted Nailgun: $1800\nRocket Launcher: $2000\n B.F.G.: $3000", 1);
 	
 	gameLocal.Printf("CLASS LEVEL %i", g_skill.GetInteger());
 	if (g_skill.GetInteger() == 0){
@@ -1419,7 +1419,7 @@ void idPlayer::CheckUpgrade(void){
 	}
 	if (gameLocal.upgradeEight){
 		GiveStuffToPlayer(this, "weapon_rocketlauncher", "1");
-	}
+}	
 	if (gameLocal.upgradeNine){
 		// spawn char_marine
 	}
@@ -5304,7 +5304,7 @@ void idPlayer::GiveObjective( const char *title, int value ) {
 	info.text = (idStr::FormatNumber(value));
 
 	gameLocal.Printf("using value: %1d\n", info.text);
-	//info.screenshot = screenshot; ARMOD no screens needed
+	info.screenshot = ""; // ARMOD no screens needed
 	inventory.objectiveNames.Append( info );
 
 	if ( showNewObjectives ) {

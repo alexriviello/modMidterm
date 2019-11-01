@@ -3465,62 +3465,62 @@ void idGameLocal::easyBuyMenu(UpgradeType upgrade) {
 
 	switch (upgrade) {
 	case UPGRADE_ONE:
-		if (money >= 100) {
-			money -= 100;
+		if (money >= 500) {
+			money -= 500;
 			upgradeOne = true;
 		}
 		break;
 	case UPGRADE_TWO:
-		if (money >= 200) {
-			money -= 200;
+		if (money >= 500) {
+			money -= 500;
 			upgradeTwo = true;
 		}
 		break;
 	case UPGRADE_THREE:
-		if (money >= 500) {
-			money -= 500;
+		if (money >= 1000) {
+			money -= 1000;
 			upgradeThree = true;
 		}
 		break;
 	case UPGRADE_FOUR:
-		if (money >= 500) {
-			money -= 500;
+		if (money >= 1000) {
+			money -= 1000;
 			upgradeFour = true;
 		}
 		break;
 	case UPGRADE_FIVE:
-		if (money >= 600) {
-			money -= 600;
+		if (money >= 1200) {
+			money -= 1200;
 			upgradeFive = true;
 		}
 		break;
 	case UPGRADE_SIX:
-		if (money >= 700) {
-			money -= 700;
+		if (money >= 1200) {
+			money -= 1200;
 			upgradeSix = true;
 		}
 		break;
 	case UPGRADE_SEVEN:
-		if (money >= 800) {
-			money -= 800;
+		if (money >= 1800) {
+			money -= 1800;
 			upgradeSeven = true;
 		}
 		break;
 		case UPGRADE_EIGHT:
-		if (money >= 900) {
-			money -= 900;
+		if (money >= 2000) {
+			money -= 2000;
 			upgradeEight = true;
 		}
 		break;
 		case UPGRADE_NINE:
-			if (money >= 1000) {
-				money -= 1000;
+			if (money >= 2000) {
+				money -= 2000;
 				upgradeNine = true;
 			}
 			break;
 		case UPGRADE_TEN:
-			if (money >= 2000) {
-				money -= 2000;
+			if (money >= 2500) {
+				money -= 2500;
 				upgradeTen = true;
 			}
 			break;
